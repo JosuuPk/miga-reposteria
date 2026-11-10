@@ -1,0 +1,145 @@
+/* Móvil: barra pegada al borde inferior mientras el configurador está en pantalla.
+   Ocupa su propio espacio al final, así que no tapa controles de forma permanente. */
+.resumen {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  margin-inline: calc(var(--margen-pagina) * -1);
+  border-top: 1px solid var(--borde);
+  background: rgba(31, 18, 13, 0.94);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.resumen__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+  width: 100%;
+  min-height: 4rem;
+  padding: var(--e-3) var(--margen-pagina);
+  border: 0;
+  background: none;
+  color: var(--texto);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.resumen__barra small {
+  display: block;
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+  line-height: 1.2;
+}
+
+.resumen__barra strong {
+  font-family: var(--fuente-titulos);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.resumen__accion {
+  flex: none;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  font-size: var(--t-xs);
+  font-weight: 600;
+}
+
+.resumen__cuerpo {
+  display: none;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: var(--e-4) var(--margen-pagina) var(--e-5);
+  border-top: 1px solid var(--borde);
+}
+
+.resumen--abierto .resumen__cuerpo {
+  display: block;
+}
+
+.resumen h2 {
+  margin-top: var(--e-5);
+  font-size: var(--t-l);
+}
+
+.resumen__lineas {
+  margin-top: var(--e-3);
+}
+
+.resumen__lineas li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--e-4);
+  padding-block: var(--e-2);
+  border-bottom: 1px solid var(--borde);
+  font-size: var(--t-xs);
+  line-height: 1.35;
+}
+
+.resumen__lineas li span:last-child {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.resumen__cotizar {
+  color: var(--caramelo);
+}
+
+.resumen__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--e-4);
+  margin-top: var(--e-4);
+}
+
+.resumen__total strong {
+  font-family: var(--fuente-titulos);
+  font-size: 1.6rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--frambuesa-viva);
+  text-align: right;
+}
+
+.resumen__pendiente,
+.resumen__condiciones {
+  margin-top: var(--e-3);
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.resumen__pendiente {
+  color: var(--caramelo);
+}
+
+/* Escritorio: columna fija a la derecha, siempre desplegada. */
+@media (min-width: 60rem) {
+  .resumen {
+    position: sticky;
+    top: 6.5rem;
+    bottom: auto;
+    align-self: start;
+    margin-inline: 0;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-tarjeta);
+    background: var(--superficie);
+  }
+
+  .resumen__barra {
+    display: none;
+  }
+
+  .resumen__cuerpo {
+    display: block;
+    max-height: calc(100vh - 8rem);
+    padding: var(--e-5);
+    border-top: 0;
+  }
+}

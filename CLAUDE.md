@@ -1,0 +1,14 @@
+# Miga: web de repostería (demostración)
+
+Web de repostería con configurador de tortas y solicitud por WhatsApp. React + TypeScript + Vite, sin backend.
+
+- Alcance y decisiones: `PROJECT_BRIEF.md`. Estado y próxima acción: `PROGRESS.md`. Léelos antes de trabajar.
+- Comandos: `npm run dev` (puerto 5173), `npm run build`, `npm test` (Vitest).
+- `computeEstimate` (`src/lib/pricing.ts`) es la única función que suma precios; el mensaje de WhatsApp debe usarla. Los ids de `cakeOptions.ts` son únicos en todo el archivo.
+- Datos separados del diseño: `src/data/` (marca, catálogo, opciones de torta, reglas). Lógica en `src/lib/`. Páginas en `src/pages/` (rutas en `src/App.tsx`, React Router). Componentes en `src/components/`, cada uno con su CSS. Tokens en `src/styles/tokens.css`.
+- Diseño oscuro y dinámico; todo movimiento debe apagarse con `prefers-reduced-motion`.
+- Importes siempre en centavos enteros de USD; se muestran con `formatUsd`.
+- Fechas en `America/Caracas`, como texto `AAAA-MM-DD`.
+- Textos de la interfaz en español. Nada de testimonios, cifras ni fotos presentadas como reales.
+- Sin número de WhatsApp configurado, la web queda en modo demostración.
+- No añadir dependencias, servicios ni claves sin acordarlo con el usuario (no programa: explicar en breve).

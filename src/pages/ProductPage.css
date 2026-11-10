@@ -1,0 +1,228 @@
+.ficha {
+  padding-block: var(--e-7) var(--e-8);
+  overflow-x: clip; /* el halo de la foto no debe ensanchar la página */
+}
+
+.ficha__ruta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin-bottom: var(--e-5);
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+}
+
+.ficha__ruta a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  text-underline-offset: 0.3em;
+}
+
+.ficha__ruta span {
+  align-self: center;
+}
+
+.ficha__ruta a:hover {
+  color: var(--frambuesa-viva);
+}
+
+.ficha__rejilla {
+  display: grid;
+  gap: var(--e-6);
+}
+
+.ficha__foto {
+  position: relative;
+}
+
+/* Copia desenfocada de la foto: su propia luz se derrama sobre la página. */
+.ficha__halo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: 1.25;
+  filter: blur(60px) saturate(1.8);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.ficha__foto .foto {
+  position: relative;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+}
+
+.ficha__texto h1 {
+  font-size: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.ficha__descripcion {
+  max-width: 34rem;
+  margin-top: var(--e-4);
+  color: var(--texto-suave);
+}
+
+.ficha__precio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--e-3);
+  margin-top: var(--e-5);
+  font-variant-numeric: tabular-nums;
+}
+
+.ficha__precio strong {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--frambuesa-viva);
+}
+
+.ficha__precio span,
+.ficha__condicion {
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+}
+
+.ficha__condicion {
+  margin-top: var(--e-1);
+}
+
+.ficha__detalles {
+  display: grid;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+  padding-top: var(--e-5);
+  border-top: 1px solid var(--borde);
+  font-size: var(--t-s);
+}
+
+.ficha__detalles li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--e-3);
+  align-items: baseline;
+}
+
+.ficha__detalles li::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--caramelo);
+  translate: 0 -0.1em;
+}
+
+.ficha__alergenos {
+  margin-top: var(--e-5);
+  font-size: var(--t-xs);
+  color: var(--texto-suave);
+}
+
+.ficha__alergenos b {
+  color: var(--texto);
+}
+
+.ficha__armar {
+  margin-top: var(--e-5);
+}
+
+.ficha__etapa {
+  margin-top: var(--e-5);
+  padding: var(--e-4);
+  border: 1px dashed var(--borde);
+  border-radius: 1rem;
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+}
+
+/* Opciones de la torta */
+.opciones {
+  margin-top: var(--e-8);
+}
+
+.opciones h2 {
+  font-size: var(--t-xl);
+}
+
+.opciones__intro {
+  max-width: 36rem;
+  margin-top: var(--e-3);
+  color: var(--texto-suave);
+  font-size: var(--t-s);
+}
+
+.opciones__rejilla {
+  display: grid;
+  gap: var(--e-4);
+  margin-top: var(--e-6);
+}
+
+.opciones__grupo {
+  padding: var(--e-5);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  background: var(--superficie);
+}
+
+.opciones__grupo h3 {
+  font-size: var(--t-l);
+  margin-bottom: var(--e-3);
+}
+
+.opciones__grupo li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--e-4);
+  padding-block: var(--e-2);
+  border-top: 1px solid var(--borde);
+  font-size: var(--t-s);
+  line-height: 1.35;
+}
+
+.opciones__grupo small {
+  color: var(--caramelo);
+  font-size: var(--t-xs);
+}
+
+.opciones__precio,
+.opciones__cotizar {
+  flex: none;
+  font-size: var(--t-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--texto-suave);
+}
+
+.opciones__cotizar {
+  color: var(--caramelo);
+}
+
+@media (min-width: 40rem) {
+  .opciones__rejilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 60rem) {
+  .ficha__rejilla {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: var(--e-8);
+    align-items: start;
+  }
+
+  .ficha__foto {
+    position: sticky;
+    top: 6.5rem;
+  }
+
+  .opciones__rejilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

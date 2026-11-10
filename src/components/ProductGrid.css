@@ -1,0 +1,177 @@
+.rejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e-4);
+}
+
+/* El <li> decide el lugar en la rejilla; el enlace es la tarjeta. */
+.producto {
+  display: grid;
+}
+
+/* Tarjeta de vidrio oscuro; al pasar el cursor se enciende el borde y la foto se acerca. */
+.producto__tarjeta {
+  display: grid;
+  gap: var(--e-4);
+  align-content: start;
+  padding: var(--e-3);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  background: var(--superficie);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 300ms ease,
+    background-color 300ms ease,
+    box-shadow 400ms ease;
+}
+
+.producto__tarjeta:hover,
+.producto__tarjeta:focus-visible {
+  border-color: rgba(255, 92, 138, 0.55);
+  background: var(--superficie-alta);
+  box-shadow: 0 1.5rem 4rem -1.5rem rgba(216, 30, 91, 0.55);
+}
+
+.producto__tarjeta .foto > * {
+  transition: scale 700ms var(--curva);
+}
+
+.producto__tarjeta:hover .foto > * {
+  scale: 1.06;
+}
+
+.producto__texto {
+  padding: 0 var(--e-2) var(--e-2);
+}
+
+.producto h3 {
+  font-size: var(--t-l);
+}
+
+.producto__resumen {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+  font-size: var(--t-s);
+  line-height: 1.5;
+}
+
+.producto__precio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--e-3);
+  margin-top: var(--e-3);
+  font-size: var(--t-s);
+  font-variant-numeric: tabular-nums;
+}
+
+.producto__precio strong {
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--frambuesa-viva);
+}
+
+.producto__precio span {
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+}
+
+.producto--destacado h3 {
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+}
+
+/* En móvil, las piezas pequeñas van en fila: miniatura a la izquierda, texto a la derecha. */
+.producto--cuadro .producto__tarjeta,
+.producto--fila .producto__tarjeta {
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  align-items: center;
+}
+
+.producto--cuadro .producto__texto,
+.producto--fila .producto__texto {
+  padding: 0 var(--e-2) 0 0;
+}
+
+@media (min-width: 40rem) {
+  .rejilla {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--e-5);
+  }
+
+  .producto--destacado {
+    grid-column: 1 / -1;
+  }
+
+  .producto--destacado .producto__tarjeta {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: end;
+    gap: var(--e-5);
+  }
+
+  .producto--medio,
+  .producto--par {
+    grid-column: span 3;
+  }
+
+  .producto--cuadro {
+    grid-column: span 2;
+  }
+
+  .producto--cuadro .producto__tarjeta {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .producto--cuadro .producto__texto {
+    padding: 0 var(--e-2) var(--e-2);
+  }
+
+  .producto--fila {
+    grid-column: span 3;
+  }
+
+  .producto--fila .producto__tarjeta {
+    grid-template-columns: 9rem minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 64rem) {
+  .rejilla {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .producto--destacado {
+    grid-column: 1 / span 6;
+    grid-row: span 2;
+  }
+
+  .producto--destacado .producto__tarjeta {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    align-content: space-between;
+    gap: var(--e-4);
+  }
+
+  .producto--medio {
+    grid-column: 7 / -1;
+  }
+
+  .producto--par {
+    grid-column: span 6;
+  }
+
+  .producto--cuadro {
+    grid-column: span 4;
+  }
+
+  .producto--fila {
+    grid-column: span 6;
+  }
+
+  .producto--fila .producto__tarjeta {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: var(--e-5);
+  }
+}

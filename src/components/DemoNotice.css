@@ -1,0 +1,9 @@
+.aviso-demo {
+  padding: var(--e-2) var(--margen-pagina);
+  background: var(--fondo-alto);
+  border-bottom: 1px solid var(--borde);
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+  line-height: 1.4;
+  text-align: center;
+}

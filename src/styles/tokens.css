@@ -1,0 +1,45 @@
+:root {
+  /* Color: cacao profundo con luz frambuesa y caramelo */
+  --fondo: #150b08;
+  --fondo-alto: #1f120d;
+  --superficie: rgba(245, 237, 221, 0.05);
+  --superficie-alta: rgba(245, 237, 221, 0.09);
+  --borde: rgba(245, 237, 221, 0.13);
+  --texto: #f5eddd;
+  --texto-suave: #cdbba8;
+  --frambuesa: #d81e5b;
+  --frambuesa-viva: #ff5c8a;
+  --frambuesa-oscura: #b3154a;
+  --caramelo: #e8a93b;
+  --mantequilla: #e3c78d;
+  --marfil-claro: #fbf6ec;
+  --cacao: #36201a;
+
+  /* Tipografía */
+  --fuente-titulos: 'Bricolage Grotesque Variable', 'Segoe UI', system-ui, sans-serif;
+  --fuente-texto: 'Atkinson Hyperlegible Next Variable', 'Segoe UI', system-ui, sans-serif;
+
+  --t-xs: 0.875rem;
+  --t-s: 1rem;
+  --t-m: 1.125rem;
+  --t-l: 1.5rem;
+  --t-xl: clamp(2.1rem, 1.3rem + 3.6vw, 3.75rem);
+  --t-xxl: clamp(2.9rem, 1rem + 9vw, 7rem);
+
+  /* Espacio */
+  --e-1: 0.25rem;
+  --e-2: 0.5rem;
+  --e-3: 0.75rem;
+  --e-4: 1rem;
+  --e-5: 1.5rem;
+  --e-6: 2rem;
+  --e-7: 3rem;
+  --e-8: 4.5rem;
+  --e-9: 7rem;
+
+  --margen-pagina: clamp(1.25rem, 5vw, 4rem);
+  --ancho-max: 78rem;
+  --radio-tarjeta: 1.5rem;
+  --radio-foto: 1rem;
+  --curva: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

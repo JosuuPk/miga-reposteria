@@ -1,0 +1,74 @@
+.pasos {
+  padding-block: var(--e-8);
+  border-top: 1px solid var(--borde);
+  background: var(--fondo-alto);
+}
+
+.pasos h2 {
+  font-size: var(--t-xl);
+  margin-bottom: var(--e-7);
+}
+
+.pasos__lista {
+  display: grid;
+  gap: var(--e-6);
+}
+
+.paso {
+  position: relative;
+  padding-top: var(--e-4);
+  border-top: 1px solid var(--borde);
+}
+
+/* Punto encendido sobre la línea: marca el avance de un paso al siguiente. */
+.paso::before {
+  content: '';
+  position: absolute;
+  top: -0.3rem;
+  left: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--frambuesa-viva);
+  box-shadow: 0 0 1rem var(--frambuesa-viva);
+}
+
+.paso__numero {
+  display: block;
+  font-family: var(--fuente-titulos);
+  font-size: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--texto-suave);
+}
+
+.paso h3 {
+  margin-top: var(--e-3);
+  font-size: var(--t-l);
+}
+
+.paso p {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+  font-size: var(--t-s);
+  line-height: 1.5;
+}
+
+@media (min-width: 40rem) {
+  .pasos__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .pasos {
+    padding-block: var(--e-9);
+  }
+
+  .pasos__lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--e-5);
+  }
+}

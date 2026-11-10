@@ -1,0 +1,104 @@
+/* Menú flotante en forma de cápsula, con fondo difuminado. */
+.cabecera {
+  position: sticky;
+  top: var(--e-3);
+  z-index: 20;
+  padding-inline: var(--margen-pagina);
+  margin-top: var(--e-3);
+}
+
+.cabecera__fila {
+  display: flex;
+  align-items: center;
+  gap: var(--e-5);
+  max-width: 60rem;
+  margin-inline: auto;
+  padding: 0.4rem 0.4rem 0.4rem 1.4rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: rgba(21, 11, 8, 0.62);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.cabecera__marca {
+  font-family: var(--fuente-titulos);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.cabecera__marca span {
+  color: var(--frambuesa-viva);
+}
+
+.cabecera__lugar {
+  display: none;
+  font-size: var(--t-xs);
+  color: var(--texto-suave);
+}
+
+.cabecera nav {
+  display: flex;
+  gap: var(--e-2);
+  margin-left: auto;
+}
+
+.cabecera .cabecera__enlace--principal {
+  background: var(--frambuesa);
+  color: #fff;
+}
+
+.cabecera .cabecera__enlace--principal:hover,
+.cabecera .cabecera__enlace--principal.active {
+  background: var(--frambuesa-oscura);
+}
+
+.cabecera__enlace {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: 1.25rem;
+  border-radius: 999px;
+  background: var(--superficie-alta);
+  font-size: var(--t-s);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 200ms ease;
+}
+
+.cabecera__enlace:hover,
+.cabecera__enlace.active {
+  background: var(--frambuesa);
+  color: #fff;
+}
+
+@media (min-width: 40rem) {
+  .cabecera__lugar {
+    display: block;
+  }
+}
+
+/* En pantallas estrechas el menú se compacta para caber en una línea. */
+@media (max-width: 26rem) {
+  .cabecera__fila {
+    gap: var(--e-2);
+    padding-left: 1rem;
+  }
+
+  .cabecera__marca {
+    font-size: 1.35rem;
+  }
+
+  .cabecera nav {
+    gap: var(--e-1);
+  }
+
+  .cabecera__enlace {
+    padding-inline: 0.8rem;
+    font-size: 0.9375rem;
+  }
+}

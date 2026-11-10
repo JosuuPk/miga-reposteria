@@ -1,0 +1,25 @@
+.pie {
+  padding-block: var(--e-7);
+  border-top: 1px solid var(--borde);
+  background: var(--fondo-alto);
+  color: var(--texto-suave);
+  font-size: var(--t-s);
+}
+
+.pie__fila {
+  display: grid;
+  gap: var(--e-3);
+}
+
+.pie__fila p {
+  max-width: 38rem;
+}
+
+.pie__marca {
+  font-family: var(--fuente-titulos);
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--texto);
+}

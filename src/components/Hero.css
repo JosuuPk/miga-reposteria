@@ -1,0 +1,375 @@
+.portada {
+  position: relative;
+  margin-top: -5rem; /* la portada sube por detrás del menú flotante */
+  padding-block: 9rem var(--e-7);
+  overflow: clip;
+  text-align: center;
+}
+
+/* Luces difuminadas del fondo */
+.portada__luz {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.portada__luz--frambuesa {
+  width: min(46rem, 110vw);
+  aspect-ratio: 1;
+  left: 50%;
+  bottom: -18%;
+  translate: -50% 0;
+  background: radial-gradient(circle, rgba(216, 30, 91, 0.75), rgba(216, 30, 91, 0) 68%);
+}
+
+.portada__luz--caramelo {
+  width: min(30rem, 80vw);
+  aspect-ratio: 1;
+  right: -8%;
+  top: -12%;
+  background: radial-gradient(circle, rgba(232, 169, 59, 0.42), rgba(232, 169, 59, 0) 70%);
+}
+
+.portada__contenido {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.portada__dato {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: var(--superficie);
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+  line-height: 1.3;
+}
+
+.portada__dato span {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--frambuesa-viva);
+  box-shadow: 0 0 0.75rem var(--frambuesa-viva);
+}
+
+.portada h1 {
+  margin-top: var(--e-5);
+  font-size: var(--t-xxl);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+.portada h1 span {
+  display: inline-block;
+  white-space: pre;
+}
+
+.portada__bajada {
+  max-width: 35rem;
+  margin-block: var(--e-5) var(--e-6);
+  color: var(--texto-suave);
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+}
+
+/* Escena: la torta en el centro y sus elecciones flotando alrededor */
+.portada__escena {
+  position: relative;
+  width: min(60vw, 24rem);
+  margin-top: var(--e-8);
+}
+
+.portada__foto {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  /* "lighten" deja pasar la luz del fondo por las zonas oscuras de la foto,
+     así la torta se funde con la página sin un recuadro negro. */
+  mix-blend-mode: lighten;
+  -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent 95%);
+  mask-image: radial-gradient(closest-side, #000 60%, transparent 95%);
+}
+
+.portada__foto-halo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scale: 1.7;
+  filter: blur(70px) saturate(1.5);
+  opacity: 0.55;
+}
+
+.corte {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0 2.5rem 4rem rgba(216, 30, 91, 0.45));
+}
+
+.corte__capa--cobertura {
+  height: 3.25rem;
+  border-radius: 1.75rem 1.75rem 0 0;
+  background: linear-gradient(180deg, #fffaf0, #f0e2c6);
+}
+
+.corte__capa--bizcocho {
+  height: 4.25rem;
+  background: linear-gradient(180deg, #ecd39c, #d9b877);
+}
+
+.corte__capa--relleno {
+  height: 2rem;
+  background: linear-gradient(180deg, #e52a66, #b3154a);
+}
+
+.corte__plato {
+  height: 0.7rem;
+  margin-inline: -1.5rem;
+  border-radius: 0 0 999px 999px;
+  background: var(--marfil-claro);
+}
+
+.eleccion {
+  position: absolute;
+  translate: calc(var(--px, 0) * var(--prof) * 1px) calc(var(--py, 0) * var(--prof) * 1px);
+  transition: translate 400ms ease-out;
+}
+
+.eleccion__cuerpo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: rgba(31, 18, 13, 0.72);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.eleccion__cuerpo i {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+}
+
+.eleccion--a {
+  top: -7%;
+  left: -20%;
+}
+
+.eleccion--b {
+  top: 30%;
+  right: -26%;
+}
+
+.eleccion--c {
+  bottom: 30%;
+  left: -26%;
+}
+
+.eleccion--d {
+  bottom: -5%;
+  right: -12%;
+}
+
+/* Con foto: la escena es más grande (la torta ocupa la mitad de la imagen)
+   y las etiquetas se acercan al centro. */
+.portada__escena--foto {
+  width: min(100%, 40rem);
+  margin-top: 0;
+  margin-bottom: calc(var(--e-7) * -1);
+}
+
+/* Penumbra suave detrás de la torta para que la luz del fondo no la lave. */
+.portada__escena--foto::before {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--fondo) 35%, rgba(21, 11, 8, 0) 100%);
+}
+
+/* En móvil las etiquetas van arriba y abajo de la torta, sin taparla. */
+.portada__escena--foto .eleccion--a {
+  top: 9%;
+  left: 0;
+}
+
+.portada__escena--foto .eleccion--b {
+  top: 18%;
+  right: 0;
+}
+
+.portada__escena--foto .eleccion--c {
+  bottom: 13%;
+  left: 0;
+}
+
+.portada__escena--foto .eleccion--d {
+  bottom: 5%;
+  right: 4%;
+}
+
+@media (min-width: 48rem) {
+  .portada {
+    padding-block: 11rem var(--e-8);
+  }
+
+  .portada__escena--foto .eleccion--a {
+    top: 22%;
+    left: -8%;
+  }
+
+  .portada__escena--foto .eleccion--b {
+    top: 36%;
+    right: -12%;
+  }
+
+  .portada__escena--foto .eleccion--c {
+    bottom: 30%;
+    left: -14%;
+  }
+
+  .portada__escena--foto .eleccion--d {
+    bottom: 16%;
+    right: -4%;
+  }
+
+  .eleccion__cuerpo {
+    padding: 0.7rem 1.2rem;
+    font-size: var(--t-s);
+  }
+
+  .eleccion--a {
+    top: 2%;
+    left: -52%;
+  }
+
+  .eleccion--b {
+    top: 26%;
+    right: -62%;
+  }
+
+  .eleccion--c {
+    bottom: 26%;
+    left: -66%;
+  }
+
+  .eleccion--d {
+    bottom: 2%;
+    right: -44%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* El titular entra desenfocado y se aclara, palabra por palabra. */
+  .portada h1 span {
+    animation: enfocar 900ms var(--curva) both;
+    animation-delay: calc(var(--i) * 90ms + 100ms);
+  }
+
+  .portada__dato,
+  .portada__bajada,
+  .portada .boton {
+    animation: subir 800ms var(--curva) both;
+    animation-delay: 650ms;
+  }
+
+  .portada__foto,
+  .portada__foto-halo {
+    animation: revelar-foto 1400ms var(--curva) 500ms both;
+  }
+
+  @keyframes revelar-foto {
+    from {
+      opacity: 0;
+      filter: blur(24px);
+      scale: 1.08;
+    }
+  }
+
+  .corte__capa {
+    animation: apilar 600ms var(--curva) both;
+    animation-delay: calc(var(--orden) * 120ms + 700ms);
+  }
+
+  .eleccion__cuerpo {
+    animation:
+      subir 700ms var(--curva) 1500ms both,
+      flotar 6s ease-in-out 2200ms infinite alternate;
+  }
+
+  .eleccion--b .eleccion__cuerpo {
+    animation-duration: 700ms, 7.5s;
+  }
+
+  .eleccion--c .eleccion__cuerpo {
+    animation-duration: 700ms, 5s;
+  }
+
+  .portada__luz--frambuesa {
+    animation: respirar 9s ease-in-out infinite alternate;
+  }
+
+  .portada__luz--caramelo {
+    animation: derivar 14s ease-in-out infinite alternate;
+  }
+
+  @keyframes enfocar {
+    from {
+      opacity: 0;
+      filter: blur(14px);
+      transform: translateY(0.35em);
+    }
+  }
+
+  @keyframes subir {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+  }
+
+  @keyframes apilar {
+    from {
+      opacity: 0;
+      transform: translateY(-2rem);
+    }
+  }
+
+  @keyframes flotar {
+    to {
+      transform: translateY(-0.6rem);
+    }
+  }
+
+  @keyframes respirar {
+    to {
+      scale: 1.18;
+      opacity: 0.75;
+    }
+  }
+
+  @keyframes derivar {
+    to {
+      transform: translate(-22vw, 8rem);
+    }
+  }
+}
