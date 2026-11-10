@@ -427,3 +427,17 @@
     align-items: start;
   }
 }
+
+.aviso--borrador {
+  margin-bottom: var(--e-5);
+}
+
+.aviso--borrador p:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-5);
+}
+
+.aviso--borrador button {
+  min-height: 2.75rem;
+}

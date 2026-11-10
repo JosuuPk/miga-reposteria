@@ -1,0 +1,69 @@
+.solicitud {
+  margin-top: var(--e-6);
+  padding: var(--e-5);
+  border: 1px solid rgba(255, 92, 138, 0.45);
+  border-radius: var(--radio-tarjeta);
+  background: rgba(216, 30, 91, 0.08);
+}
+
+.solicitud h3 {
+  font-size: var(--t-l);
+}
+
+.solicitud__ayuda {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+}
+
+.solicitud__texto {
+  max-height: 22rem;
+  margin: var(--e-4) 0;
+  padding: var(--e-4);
+  overflow: auto;
+  border: 1px solid var(--borde);
+  border-radius: 0.9rem;
+  background: var(--fondo);
+  font-family: var(--fuente-texto);
+  font-size: var(--t-xs);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.solicitud__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+.solicitud__botones .boton {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.solicitud__estado {
+  min-height: 1.5rem;
+  margin-top: var(--e-3);
+  color: var(--mantequilla);
+  font-size: var(--t-xs);
+}
+
+.solicitud__nota {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+  font-size: var(--t-xs);
+  line-height: 1.5;
+}
+
+.solicitud__nota--demo {
+  padding: var(--e-3) var(--e-4);
+  border: 1px dashed rgba(232, 169, 59, 0.6);
+  border-radius: 0.9rem;
+  color: var(--texto);
+}
+
+.solicitud__nota--demo b {
+  color: var(--caramelo);
+}

@@ -4,6 +4,7 @@ import '@fontsource-variable/bricolage-grotesque';
 import '@fontsource-variable/atkinson-hyperlegible-next';
 import './styles/tokens.css';
 import './styles/base.css';
+import './styles/forms.css';
 import { App } from './App';
 
 createRoot(document.getElementById('root')!).render(

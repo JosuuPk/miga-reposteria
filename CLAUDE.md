@@ -10,5 +10,6 @@ Web de repostería con configurador de tortas y solicitud por WhatsApp. React + 
 - Importes siempre en centavos enteros de USD; se muestran con `formatUsd`.
 - Fechas en `America/Caracas`, como texto `AAAA-MM-DD`.
 - Textos de la interfaz en español. Nada de testimonios, cifras ni fotos presentadas como reales.
-- Sin número de WhatsApp configurado, la web queda en modo demostración.
+- Sin número de WhatsApp configurado, la web queda en modo demostración. Nunca mostrar que una solicitud se envió, reservó o pagó. No inventar un número.
+- El borrador (`src/lib/draft.ts`) no guarda observaciones ni datos personales; si cambia la forma de `CakeConfig`, subir `CONFIG_VERSION`.
 - No añadir dependencias, servicios ni claves sin acordarlo con el usuario (no programa: explicar en breve).

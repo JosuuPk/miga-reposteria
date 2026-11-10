@@ -12,7 +12,7 @@ import {
 } from '../data/cakeOptions';
 import type { Product } from '../data/catalog';
 import { deliveryZones, type DateRules } from '../data/rules';
-import { validateDate } from './dates';
+import { isIsoDate, validateDate } from './dates';
 
 /** Grupos de opciones, en el orden de los pasos. El orden decide quién manda. */
 export const groups = ['size', 'flavor', 'filling', 'covering', 'extras'] as const;
@@ -179,6 +179,58 @@ export function setMessage(config: CakeConfig, message: string): CakeConfig {
 
 export function setNotes(config: CakeConfig, notes: string): CakeConfig {
   return { ...config, notes: notes.slice(0, notesMaxLength) };
+}
+
+/**
+ * Reconstruye una configuración a partir de datos no confiables (un borrador
+ * guardado). Descarta lo que no reconoce: versión distinta, ids que ya no existen,
+ * combinaciones que dejaron de ser compatibles, textos demasiado largos.
+ * Devuelve null si los datos no corresponden a este producto o versión.
+ */
+export function restoreConfig(raw: unknown, product: Product): CakeConfig | null {
+  if (typeof raw !== 'object' || raw === null) return null;
+  const data = raw as Record<string, unknown>;
+  if (data.version !== CONFIG_VERSION || data.productId !== product.id) return null;
+
+  const text = (value: unknown) => (typeof value === 'string' ? value : '');
+  const idIn = (value: unknown, group: Group): string | null =>
+    typeof value === 'string' && allOptions.get(value)?.group === group ? value : null;
+
+  // Se parte de una configuración sin elecciones y se repite cada elección en
+  // orden, así las reglas de compatibilidad vuelven a aplicarse.
+  let config: CakeConfig = {
+    ...createConfig(product),
+    flavorId: null,
+    fillingId: null,
+    coveringId: null,
+  };
+  const single = [
+    ['size', data.sizeId],
+    ['flavor', data.flavorId],
+    ['filling', data.fillingId],
+    ['covering', data.coveringId],
+  ] as const;
+  for (const [group, value] of single) {
+    const id = idIn(value, group);
+    if (id) config = choose(config, group, id).config;
+  }
+  if (Array.isArray(data.extraIds)) {
+    for (const value of data.extraIds) {
+      const id = idIn(value, 'extras');
+      if (id && !config.extraIds.includes(id)) config = toggleExtra(config, id);
+    }
+  }
+
+  config = setMessage(config, text(data.message));
+  config = setNotes(config, text(data.notes));
+  config.date = isIsoDate(text(data.date)) ? text(data.date) : '';
+  if (data.deliveryMode === 'retiro') {
+    config.deliveryMode = 'retiro';
+  } else if (data.deliveryMode === 'entrega') {
+    config.deliveryMode = 'entrega';
+    config.zoneId = deliveryZones.some((z) => z.id === data.zoneId) ? (data.zoneId as string) : null;
+  }
+  return config;
 }
 
 export const steps = [

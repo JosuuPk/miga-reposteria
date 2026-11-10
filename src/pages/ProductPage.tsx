@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router';
 import { ProductGrid, priceText } from '../components/ProductGrid';
 import { ProductPhoto } from '../components/ProductPhoto';
+import { SimpleRequestForm } from '../components/request/SimpleRequestForm';
 import { coverings, extras, fillings, flavors, sizes, type CakeOption } from '../data/cakeOptions';
 import { familyLabels, findProduct, products, type Product } from '../data/catalog';
 import { formatSurcharge } from '../lib/money';
@@ -107,13 +108,14 @@ function ProductView({ product }: { product: Product }) {
                 Armar esta torta
               </Link>
             ) : (
-              <p className="ficha__etapa">
-                El envío de la solicitud por WhatsApp se añade en una etapa posterior de la
-                demostración.
-              </p>
+              <a className="boton ficha__armar" href="#pedido-titulo">
+                Solicitar
+              </a>
             )}
           </div>
         </div>
+
+        {!preset && <SimpleRequestForm key={product.id} product={product} />}
 
         {preset && (
           <section className="opciones" aria-labelledby="opciones-titulo">

@@ -1,9 +1,9 @@
-// Cálculo del estimado. ESTA es la única función que suma precios: la usan el
+// Cálculo del estimado. ESTE es el único módulo que suma precios: lo usan el
 // resumen en pantalla y el mensaje de la solicitud, para que nunca difieran.
 
 import type { Product } from '../data/catalog';
 import { deliveryZones, pickup } from '../data/rules';
-import { findOption, groupLabels, type CakeConfig } from './cakeConfig';
+import { findOption, groupLabels, type CakeConfig, type DeliveryMode } from './cakeConfig';
 import { formatUsd } from './money';
 
 export type EstimateLine = {
@@ -23,6 +23,30 @@ export type Estimate = {
   pending: string[];
 };
 
+function deliveryLine(mode: DeliveryMode | null, zoneId: string | null): EstimateLine | null {
+  if (mode === 'retiro') {
+    return { key: 'entrega', label: pickup.label, cents: pickup.feeCents, kind: 'entrega' };
+  }
+  if (mode === 'entrega') {
+    const zone = deliveryZones.find((z) => z.id === zoneId);
+    if (zone) {
+      return { key: 'entrega', label: `Entrega en ${zone.label}`, cents: zone.feeCents, kind: 'entrega' };
+    }
+  }
+  return null;
+}
+
+function summarize(lines: EstimateLine[]): Estimate {
+  let knownTotalCents = 0;
+  const pending: string[] = [];
+  for (const line of lines) {
+    if (line.cents === null) pending.push(line.label);
+    else knownTotalCents += line.cents;
+  }
+  return { lines, knownTotalCents, pending };
+}
+
+/** Estimado de una torta armada en el configurador. */
 export function computeEstimate(product: Product, config: CakeConfig): Estimate {
   const lines: EstimateLine[] = [
     {
@@ -63,28 +87,68 @@ export function computeEstimate(product: Product, config: CakeConfig): Estimate 
     });
   }
 
-  if (config.deliveryMode === 'retiro') {
-    lines.push({ key: 'entrega', label: pickup.label, cents: pickup.feeCents, kind: 'entrega' });
-  } else if (config.deliveryMode === 'entrega') {
-    const zone = deliveryZones.find((z) => z.id === config.zoneId);
-    if (zone) {
-      lines.push({
-        key: 'entrega',
-        label: `Entrega en ${zone.label}`,
-        cents: zone.feeCents,
-        kind: 'entrega',
-      });
-    }
+  const delivery = deliveryLine(config.deliveryMode, config.zoneId);
+  if (delivery) lines.push(delivery);
+
+  return summarize(lines);
+}
+
+/** Solicitud de un producto sin configurador (postres y bocados). */
+export type SimpleRequest = {
+  productId: string;
+  quantity: number;
+  /** Fecha deseada, 'AAAA-MM-DD' o ''. */
+  date: string;
+  deliveryMode: DeliveryMode | null;
+  zoneId: string | null;
+  notes: string;
+};
+
+export const maxQuantity = 10;
+
+export function createSimpleRequest(product: Product): SimpleRequest {
+  return {
+    productId: product.id,
+    quantity: 1,
+    date: '',
+    deliveryMode: null,
+    zoneId: null,
+    notes: '',
+  };
+}
+
+/** Deja la cantidad en un entero entre 1 y el máximo. */
+export function clampQuantity(value: number): number {
+  if (!Number.isFinite(value)) return 1;
+  return Math.min(maxQuantity, Math.max(1, Math.trunc(value)));
+}
+
+/** Estimado de un producto sin configurador: precio por cantidad más entrega. */
+export function computeSimpleEstimate(product: Product, request: SimpleRequest): Estimate {
+  const quantity = clampQuantity(request.quantity);
+  const lines: EstimateLine[] = [
+    {
+      key: 'base',
+      label: `${product.name} (${product.unitLabel}) × ${quantity}`,
+      cents: product.basePriceCents * quantity,
+      kind: 'base',
+    },
+  ];
+
+  // Los productos con precio "desde" tienen variantes que define el negocio.
+  if (product.priceIsStartingAt) {
+    lines.push({
+      key: 'personalizacion',
+      label: 'Personalización (sabores, tamaño de caja o diseño)',
+      cents: null,
+      kind: 'adicional',
+    });
   }
 
-  let knownTotalCents = 0;
-  const pending: string[] = [];
-  for (const line of lines) {
-    if (line.cents === null) pending.push(line.label);
-    else knownTotalCents += line.cents;
-  }
+  const delivery = deliveryLine(request.deliveryMode, request.zoneId);
+  if (delivery) lines.push(delivery);
 
-  return { lines, knownTotalCents, pending };
+  return summarize(lines);
 }
 
 /** Texto del importe de una línea. */

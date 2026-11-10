@@ -2,44 +2,41 @@
 
 ## Terminado
 - **Día 1 (10 nov 2026):** entorno comprobado (Git 2.55, Node 24.19, npm 11.17). Proyecto Vite + React + TypeScript. Datos de marca, catálogo y reglas. Muestra visual oscura y dinámica según las referencias del usuario. Diez imágenes del usuario (generadas con ChatGPT) conectadas y rotuladas "Imagen ilustrativa".
-- **Día 2 (10 nov 2026):** navegación con React Router (`/`, `/catalogo`, `/producto/<id>`, no encontrada). Inicio, catálogo con filtro en la dirección y fichas de producto con tabla de opciones.
-- **Día 3 (10 nov 2026):**
-  - Configurador en `/armar/<id>` para las tres tortas, con nueve pasos: tamaño, bizcocho, relleno, cobertura, extras, mensaje, fecha, entrega y revisión. Se puede ir a cualquier paso sin perder lo elegido.
-  - Lógica sin interfaz en `src/lib/`: `cakeConfig.ts` (estado, compatibilidades, validación de pasos), `pricing.ts` (única función que suma: `computeEstimate`) y `dates.ts` (fechas como `AAAA-MM-DD`, "hoy" en America/Caracas).
-  - Compatibilidades: el paso anterior manda. Una opción que choca con algo elegido antes se muestra bloqueada con el motivo; si se cambia una opción anterior, lo incompatible se quita y aparece un aviso con enlace para corregirlo.
-  - Resumen con dibujo de la torta en corte, desglose y total. "Requiere cotización" y "Entrega por cotizar" quedan fuera del total y se muestran como "$X + por cotizar".
-  - Fecha: calendario con mínimo y máximo, mensajes específicos por cada regla y seis fechas sugeridas que cumplen las reglas.
-  - Enlaces: botón "Armar esta torta" en las fichas de torta y "Armar torta" en el menú.
+- **Día 2:** navegación con React Router (`/`, `/catalogo`, `/producto/<id>`, no encontrada). Inicio, catálogo con filtro en la dirección y fichas de producto.
+- **Día 3:** configurador en `/armar/<id>` con nueve pasos, compatibilidades, estimado único (`computeEstimate`) y fechas en America/Caracas.
+- **Día 4:**
+  - Mensaje de la solicitud (`src/lib/request.ts`): producto, opciones, porciones, texto sobre la torta, fecha, modalidad y zona, desglose, observaciones y aclaración de que requiere confirmación. El desglose sale del mismo cálculo que la pantalla.
+  - Enlace de WhatsApp con `encodeURIComponent`. Sin número válido en `brand.ts` devuelve `null` y la web queda en modo demostración: se puede revisar y copiar, no se abre WhatsApp.
+  - Panel "Tu solicitud" al final de la revisión: vista previa, "Copiar solicitud" y aviso. Nunca dice que algo se envió, reservó o pagó.
+  - Borrador en `localStorage` (`src/lib/draft.ts`): con versión, validado al cargar (`restoreConfig`), caduca a los 7 días. No guarda las observaciones. Aviso al recuperarlo, con "Empezar de cero".
+  - Solicitud simple para postres y bocados en su ficha: cantidad, fecha, entrega, observaciones y estimado. Los productos con precio "desde" dejan la personalización por cotizar.
+  - Los campos de fecha y entrega se comparten entre configurador y solicitud simple (`src/components/request/Fields.tsx`); los estilos de formulario pasaron a `src/styles/forms.css`.
 
 ## Comprobado
 - `npm run build` compila sin errores.
-- `npm test`: 40 pruebas en 3 archivos, todas pasan (importes, estimado, compatibilidades, pasos, fechas y zona horaria).
-- En navegador (escritorio), recorrido completo del configurador:
-  - Avanzar sin elegir muestra el error del paso.
-  - Cambiar a 30 porciones quita el merengue, avisa y bloquea merengue y semidesnuda; pulsar una opción bloqueada no cambia nada.
-  - Sumar y quitar extras cambia el total en su importe exacto.
-  - "Diseño especial" y "Otra zona" muestran cotización y el total pasa a "+ por cotizar".
-  - Fecha vacía, pasada, sin anticipación, domingo, bloqueada (24 dic) y demasiado lejana: cada una con su mensaje.
-  - Retiro, entrega con zona, y cambio de modalidad.
-  - Mensaje recortado a 40 caracteres con acentos; observaciones con acentos, símbolos y salto de línea.
-  - Volver atrás conserva las selecciones.
+- `npm test`: 55 pruebas en 4 archivos, todas pasan. Incluyen el contenido del mensaje, que su total coincide con el resumen, la codificación del enlace (ida y vuelta con acentos, saltos de línea y símbolos), el modo demostración sin número y la restauración de borradores dañados o incompatibles.
+- En navegador (escritorio):
+  - Configuración completa hasta la revisión; el mensaje mostrado contiene todo y su total ($53) coincide con el resumen.
+  - Modo demostración: no aparece enlace a WhatsApp y se muestra el aviso.
+  - "Copiar solicitud" informa "Solicitud copiada". No se pudo leer el portapapeles desde la prueba para comprobar su contenido (permiso denegado en el panel).
+  - Borrador: al recargar se recupera todo salvo las observaciones; "Empezar de cero" lo borra; un borrador dañado se ignora sin errores.
+  - Solicitud simple: cantidad, errores específicos al preparar sin fecha ni entrega, mensaje final.
+  - Teclado en el configurador: espacio y flechas en las opciones, tabulador hasta "Siguiente", Enter avanza y el foco pasa al título del paso; el contorno de foco es visible.
   - Sin errores de consola durante el recorrido.
-- Móvil (375 px): sin desplazamiento horizontal; barra de estimado al pie que se despliega; menú en una línea (se corrigió un salto de línea y el color del botón "Armar torta").
-- No comprobado: recorrido completo solo con teclado en el configurador (los controles son radios y casillas nativos y el foco pasa al título del paso, pero no se recorrió paso a paso); lector de pantalla; modo "movimiento reducido".
+- Móvil (375 px): ficha con solicitud simple y configurador sin desplazamiento horizontal.
+- Días anteriores: cambio de tamaño con opciones incompatibles, extras, cotizaciones, fechas pasadas, sin anticipación, cerradas y bloqueadas, retiro y entrega (ver historial de Git).
+- **No comprobado:** abrir WhatsApp de verdad (no hay número real; el enlace solo se probó con pruebas automáticas); contenido real del portapapeles; lector de pantalla; modo "movimiento reducido"; navegadores distintos del panel integrado (Chromium).
 
 ## Pendiente
-- Primer commit: Git no tiene nombre ni correo de autor configurados; falta que el usuario diga cuáles usar.
-- Día 4: mensaje de la solicitud (usando `computeEstimate`), copiar, enlace de WhatsApp bien codificado, modo demostración sin número, borrador guardado en el navegador con versión y validación, solicitud simple para postres y bocados, pruebas con navegador.
-- Día 5: preguntas frecuentes y condiciones, pulido, README, archivo de configuración de ejemplo, capturas, caso de estudio y preparación para publicar.
+- Día 5: preguntas frecuentes y condiciones, pulido, README con instalación y actualización, archivo de configuración de ejemplo, registro de pruebas y limitaciones, lista de datos para un negocio real, capturas, caso de estudio y preparación para publicar (regla de rutas, og:image, costos y pasos).
 
 ## Problemas conocidos
-- La revisión termina con un aviso: copiar y abrir WhatsApp llega el Día 4.
-- La configuración se pierde al recargar la página (el borrador guardado es del Día 4).
-- Postres y bocados aún no tienen forma de solicitarse.
 - El calendario nativo no puede deshabilitar domingos ni fechas bloqueadas; se validan al elegir y se ofrecen fechas sugeridas.
-- `compartir.webp` sin conectar: og:image necesita la dirección pública del sitio y conviene JPG (Día 5).
-- Al publicar hará falta una regla para que el alojamiento sirva `index.html` en cualquier ruta (Día 5).
+- La solicitud simple no guarda borrador (solo el configurador).
+- `compartir.webp` sin conectar: og:image necesita la dirección pública del sitio y conviene JPG.
+- Al publicar hará falta una regla para que el alojamiento sirva `index.html` en cualquier ruta.
 - En la vista previa integrada las animaciones de entrada no arrancan mientras el panel no está a la vista.
+- `src/styles/forms.css` todavía incluye la maquetación del configurador (viene del antiguo `ConfiguratorPage.css`); funciona, pero se puede separar en el pulido.
 
 ## Próxima acción
-Con el visto bueno del usuario al Día 3, empezar el Día 4.
+Con el visto bueno del usuario al Día 4, empezar el Día 5.

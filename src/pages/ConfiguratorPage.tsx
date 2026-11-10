@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { Summary } from '../components/configurator/Summary';
+import { DateField, DeliveryField } from '../components/request/Fields';
+import { RequestPanel } from '../components/request/RequestPanel';
 import { brand } from '../data/brand';
 import { messageMaxLength, notesMaxLength, sizes } from '../data/cakeOptions';
 import { findProduct, type Product } from '../data/catalog';
@@ -22,21 +24,15 @@ import {
   type Removal,
   type StepId,
 } from '../lib/cakeConfig';
-import {
-  addDays,
-  closedDaysText,
-  formatLongDate,
-  formatShortDate,
-  nextValidDates,
-  todayInZone,
-  validateDate,
-} from '../lib/dates';
-import { formatSurcharge, formatUsd } from '../lib/money';
+import { formatLongDate, todayInZone, validateDate } from '../lib/dates';
+import { clearDraft, loadDraft, saveDraft } from '../lib/draft';
+import { formatSurcharge } from '../lib/money';
+import { buildCakeMessage } from '../lib/request';
 import { usePageTitle } from '../lib/usePageTitle';
 import { NotFoundPage } from './NotFoundPage';
 import './pages.css';
 import './ProductPage.css';
-import './ConfiguratorPage.css';
+
 
 export function ConfiguratorPage() {
   const { id } = useParams();
@@ -61,9 +57,14 @@ const hints: Record<StepId, string> = {
 
 function Configurator({ product }: { product: Product }) {
   usePageTitle(`Armar: ${product.name}`);
-  const [config, setConfig] = useState<CakeConfig>(() => createConfig(product));
+  // Borrador guardado en este navegador (validado al cargarlo).
+  const [draft] = useState(() => loadDraft(product));
+  const [config, setConfig] = useState<CakeConfig>(() => draft ?? createConfig(product));
+  const [showDraftNotice, setShowDraftNotice] = useState(draft !== null);
   const [stepIndex, setStepIndex] = useState(0);
-  const [visited, setVisited] = useState<Set<StepId>>(() => new Set(['size']));
+  const [visited, setVisited] = useState<Set<StepId>>(
+    () => new Set(draft ? steps.map((s) => s.id) : ['size']),
+  );
   const [error, setError] = useState<string | null>(null);
   const [removals, setRemovals] = useState<Removal[]>([]);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -80,6 +81,18 @@ function Configurator({ product }: { product: Product }) {
     }
     headingRef.current?.focus();
   }, [stepIndex]);
+
+  useEffect(() => saveDraft(config), [config]);
+
+  function startOver() {
+    clearDraft(product.id);
+    setConfig(createConfig(product));
+    setStepIndex(0);
+    setVisited(new Set(['size']));
+    setRemovals([]);
+    setError(null);
+    setShowDraftNotice(false);
+  }
 
   function goTo(index: number) {
     setError(null);
@@ -130,6 +143,23 @@ function Configurator({ product }: { product: Product }) {
       </nav>
 
       <h1>Arma tu torta</h1>
+
+      {showDraftNotice && (
+        <div className="aviso aviso--borrador" role="status">
+          <p>
+            Recuperamos el borrador que dejaste en este dispositivo. Las observaciones no se
+            guardan.
+          </p>
+          <p>
+            <button type="button" onClick={() => setShowDraftNotice(false)}>
+              Seguir con el borrador
+            </button>
+            <button type="button" onClick={startOver}>
+              Empezar de cero
+            </button>
+          </p>
+        </div>
+      )}
 
       <div className="configurador__rejilla">
         <div className="configurador__pasos">
@@ -239,10 +269,12 @@ function Configurator({ product }: { product: Product }) {
             )}
 
             {step.id === 'date' && (
-              <DateStep config={config} today={today} onChange={(date) => update({ date })} />
+              <DateField date={config.date} today={today} onChange={(date) => update({ date })} />
             )}
 
-            {step.id === 'delivery' && <DeliveryStep config={config} onChange={update} />}
+            {step.id === 'delivery' && (
+              <DeliveryField mode={config.deliveryMode} zoneId={config.zoneId} onChange={update} />
+            )}
 
             {step.id === 'review' && (
               <ReviewStep
@@ -331,132 +363,6 @@ function OptionStep({
   );
 }
 
-function DateStep({
-  config,
-  today,
-  onChange,
-}: {
-  config: CakeConfig;
-  today: string;
-  onChange: (date: string) => void;
-}) {
-  const suggestions = useMemo(() => nextValidDates(dateRules, today, 6), [today]);
-  const check = config.date ? validateDate(config.date, dateRules, today) : null;
-
-  return (
-    <>
-      <div className="campo">
-        <label htmlFor="fecha">Fecha deseada</label>
-        <input
-          id="fecha"
-          type="date"
-          value={config.date}
-          min={addDays(today, dateRules.minLeadDays)}
-          max={addDays(today, dateRules.maxAdvanceDays)}
-          aria-describedby="fecha-reglas fecha-estado"
-          onChange={(e) => onChange(e.target.value)}
-        />
-        <p id="fecha-estado" className={check && !check.ok ? 'campo__nota campo__nota--error' : 'campo__nota campo__nota--ok'} aria-live="polite">
-          {check
-            ? check.ok
-              ? `${formatLongDate(config.date)}: cumple las reglas conocidas.`
-              : check.message
-            : ''}
-        </p>
-      </div>
-
-      <div className="sugerencias">
-        <p>Próximas fechas que cumplen las reglas</p>
-        <ul>
-          {suggestions.map((date) => (
-            <li key={date}>
-              <button type="button" aria-pressed={config.date === date} onClick={() => onChange(date)}>
-                {formatShortDate(date)}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <p id="fecha-reglas" className="campo__nota">
-        Mínimo {dateRules.minLeadDays} días de anticipación. Sin producción ni entregas los{' '}
-        {closedDaysText(dateRules)}. Las fechas usan la hora de Caracas. Que una fecha cumpla las
-        reglas no garantiza cupo: la disponibilidad la confirma el negocio.
-      </p>
-    </>
-  );
-}
-
-function DeliveryStep({
-  config,
-  onChange,
-}: {
-  config: CakeConfig;
-  onChange: (patch: Partial<CakeConfig>) => void;
-}) {
-  return (
-    <>
-      <fieldset className="opciones-lista">
-        <legend className="solo-lectores">Modalidad</legend>
-        <label className="opcion">
-          <input
-            type="radio"
-            name="modalidad"
-            checked={config.deliveryMode === 'retiro'}
-            onChange={() => onChange({ deliveryMode: 'retiro', zoneId: null })}
-          />
-          <span className="opcion__texto">
-            <b>{pickup.label}</b>
-            <small>{pickup.areaLabel}</small>
-          </span>
-          <span className="opcion__precio">Sin costo</span>
-        </label>
-        <label className="opcion">
-          <input
-            type="radio"
-            name="modalidad"
-            checked={config.deliveryMode === 'entrega'}
-            onChange={() => onChange({ deliveryMode: 'entrega' })}
-          />
-          <span className="opcion__texto">
-            <b>Entrega a domicilio</b>
-            <small>La tarifa depende de la zona</small>
-          </span>
-          <span className="opcion__precio">Según zona</span>
-        </label>
-      </fieldset>
-
-      {config.deliveryMode === 'entrega' && (
-        <>
-          <h3 className="subtitulo">Zona de entrega</h3>
-          <fieldset className="opciones-lista opciones-lista--compacta">
-            <legend className="solo-lectores">Zona de entrega</legend>
-            {deliveryZones.map((zone) => (
-              <label key={zone.id} className="opcion">
-                <input
-                  type="radio"
-                  name="zona"
-                  checked={config.zoneId === zone.id}
-                  onChange={() => onChange({ zoneId: zone.id })}
-                />
-                <span className="opcion__texto">
-                  <b>{zone.label}</b>
-                </span>
-                <span className={zone.feeCents === null ? 'opcion__precio opcion__precio--cotizar' : 'opcion__precio'}>
-                  {zone.feeCents === null ? 'Entrega por cotizar' : `+${formatUsd(zone.feeCents)}`}
-                </span>
-              </label>
-            ))}
-          </fieldset>
-          <p className="campo__nota">
-            No pedimos tu dirección aquí: la coordinas con el negocio por WhatsApp.
-          </p>
-        </>
-      )}
-    </>
-  );
-}
-
 function ReviewStep({
   product,
   config,
@@ -539,10 +445,7 @@ function ReviewStep({
           Para terminar falta: {missing.map((m) => m.label.toLowerCase()).join(', ')}.
         </p>
       ) : (
-        <p className="revision__etapa">
-          Tu solicitud está completa. El paso de copiarla y abrir WhatsApp se añade en la
-          siguiente etapa de la demostración. Nada se ha enviado ni reservado.
-        </p>
+        <RequestPanel message={buildCakeMessage(product, config)} />
       )}
     </>
   );
