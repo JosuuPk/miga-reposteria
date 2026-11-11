@@ -21,6 +21,16 @@ Estos servicios alojan sitios estáticos y, según la información con la que se
 | Vercel | Sí (`vercel.json`) | https://vercel.com/pricing |
 | GitHub Pages | No: requiere un ajuste adicional para las rutas | https://docs.github.com/pages |
 
+### Netlify, plan gratuito (elegido; consultado el 11 nov 2026)
+
+Según su página de precios, el plan Free cuesta $0 y funciona con **300 créditos al mes**:
+
+- Cada publicación (cada vez que se sube un cambio a la rama `main`) gasta 15 créditos: unas 20 publicaciones al mes si no hubiera visitas.
+- El tráfico también gasta: 20 créditos por GB transferido y 2 por cada 10.000 peticiones.
+- No pide tarjeta para empezar. Antes de publicar, revisa en su página qué ocurre al agotar los créditos del mes.
+
+Consejo: agrupa los cambios y súbelos juntos en lugar de publicar muchas veces al día.
+
 Para un negocio real, revisa además las condiciones de uso comercial del plan gratuito de cada servicio.
 
 ## Costos a prever
