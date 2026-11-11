@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router';
 import { DemoNotice } from './components/DemoNotice';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { WhatsAppBubble } from './components/WhatsAppButton';
 import { routerBase } from './lib/assetUrl';
 import { CatalogPage } from './pages/CatalogPage';
 import { ConfiguratorPage } from './pages/ConfiguratorPage';
@@ -46,6 +47,7 @@ function Layout() {
         </Routes>
       </main>
       <Footer />
+      <WhatsAppBubble />
     </>
   );
 }

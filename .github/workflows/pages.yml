@@ -32,7 +32,9 @@ jobs:
         env:
           # Dirección pública, para la vista previa al compartir.
           VITE_SITE_URL: https://josuupk.github.io/miga-reposteria
-          # Sin VITE_WHATSAPP_NUMBER: la web queda en modo demostración.
+          # Número de contacto de la demostración (visible en el sitio). Sin esta
+          # línea, la web no muestra botones de WhatsApp ni abre WhatsApp.
+          VITE_WHATSAPP_NUMBER: "584121881538"
       - name: Hacer que las rutas internas carguen al abrirlas directamente
         run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3

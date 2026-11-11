@@ -45,7 +45,7 @@ Hechas en Chromium, con el panel integrado de la aplicación y con Playwright, a
 
 ## No probado
 
-- **Abrir WhatsApp de verdad.** No hay un número real configurado y no se inventó uno. El enlace solo está cubierto por las pruebas automáticas. Hay que probarlo con un número real antes de usar la web con un negocio.
+- **Abrir WhatsApp de verdad.** Desde el 11 nov 2026 el sitio usa el número del autor como contacto de la demostración. Se comprobó que los enlaces apuntan a ese número con el mensaje bien codificado, pero no se pulsaron para no enviar mensajes: falta probarlo en un teléfono.
 - **Otros navegadores.** Todo se probó en Chromium. Falta Safari (iPhone) y Firefox; el punto más sensible es el selector de fecha, que cada navegador dibuja a su manera.
 - **Teléfonos reales.** Los tamaños de móvil se emularon en el ordenador.
 - **Lectores de pantalla.** Se usaron controles nativos, etiquetas y regiones de aviso, pero no se probó con NVDA, VoiceOver ni TalkBack.

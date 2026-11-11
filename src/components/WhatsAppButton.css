@@ -1,0 +1,108 @@
+:root {
+  --whatsapp: #1fa855;
+  --whatsapp-oscuro: #178a45;
+}
+
+.boton--whatsapp {
+  gap: var(--e-2);
+}
+
+.boton--whatsapp svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+/* Burbuja fija, abajo a la derecha. */
+.burbuja {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  color: #fff;
+  text-decoration: none;
+}
+
+.burbuja__icono {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--whatsapp);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
+  transition:
+    background-color 200ms ease,
+    transform 250ms var(--curva);
+}
+
+.burbuja:hover .burbuja__icono,
+.burbuja:focus-visible .burbuja__icono {
+  background: var(--whatsapp-oscuro);
+  transform: scale(1.08);
+}
+
+/* El texto aparece al pasar el cursor o al enfocar; en pantallas táctiles no se muestra. */
+.burbuja__texto {
+  /* Fuera del flujo: así la zona pulsable es solo el círculo. */
+  position: absolute;
+  right: calc(100% + 0.5rem);
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: rgba(31, 18, 13, 0.92);
+  color: var(--texto);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(0.5rem);
+  pointer-events: none;
+  transition:
+    opacity 200ms ease,
+    transform 250ms var(--curva);
+}
+
+.burbuja:hover .burbuja__texto,
+.burbuja:focus-visible .burbuja__texto {
+  opacity: 1;
+  transform: none;
+}
+
+/* En el configurador, en móvil, la burbuja se oculta: taparía los precios de las
+   opciones y la barra de estimado, y ese recorrido ya termina en WhatsApp. */
+@media (max-width: 59.99rem) {
+  .burbuja--elevada {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Una onda suave cada pocos segundos para que se note sin distraer. */
+  .burbuja__icono::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--whatsapp);
+    animation: onda 3.2s ease-out infinite;
+  }
+
+  @keyframes onda {
+    0%,
+    55% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    60% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+  }
+}

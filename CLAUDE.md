@@ -12,6 +12,6 @@ Web de repostería con configurador de tortas y solicitud por WhatsApp. React + 
 - Textos de la interfaz en español. Nada de testimonios, cifras ni fotos presentadas como reales.
 - Configuración por variables `VITE_*` (`.env.example`); el número de WhatsApp no se escribe en el código. Guías en `docs/` y `README.md`.
 - Publicada en GitHub Pages bajo `/miga-reposteria/`: las rutas de imágenes pasan por `assetUrl` (`src/lib/assetUrl.ts`); no escribir `/images/...` directo en componentes.
-- Sin número de WhatsApp configurado, la web queda en modo demostración. Nunca mostrar que una solicitud se envió, reservó o pagó. No inventar un número.
+- El sitio publicado usa el número del propio usuario como contacto de la demo (en el workflow de Pages). Sin número configurado, la web queda en modo demostración y no muestra botones de WhatsApp. Nunca mostrar que una solicitud se envió, reservó o pagó. No inventar un número.
 - El borrador (`src/lib/draft.ts`) no guarda observaciones ni datos personales; si cambia la forma de `CakeConfig`, subir `CONFIG_VERSION`.
 - No añadir dependencias, servicios ni claves sin acordarlo con el usuario (no programa: explicar en breve).

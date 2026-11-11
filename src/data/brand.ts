@@ -13,6 +13,8 @@ export type Brand = {
    * la solicitud, pero no abre WhatsApp.
    */
   whatsappNumber: string | null;
+  /** Mensaje corto que queda escrito al pulsar el botón o la burbuja de WhatsApp. */
+  whatsappGreeting: string;
   /**
    * Foto de la portada (cuadrada, fondo oscuro), p. ej. "/images/portada.png".
    * Con null se muestra el corte de torta dibujado.
@@ -30,6 +32,7 @@ export const brand: Brand = {
   isDemo: true,
   // Se lee de la variable VITE_WHATSAPP_NUMBER (ver .env.example). Vacía = demostración.
   whatsappNumber: import.meta.env.VITE_WHATSAPP_NUMBER?.trim() || null,
+  whatsappGreeting: 'Hola, vi la demo de Miga y quiero más información.',
   heroImageSrc: '/images/portada.webp',
   timeZone: 'America/Caracas',
   currency: 'USD',

@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router';
 import { brand } from '../data/brand';
 import { assetUrl } from '../lib/assetUrl';
+import { WhatsAppButton } from './WhatsAppButton';
 import './Hero.css';
 
 const titular = ['Tu', 'torta,', 'capa', 'por', 'capa.'];
@@ -58,9 +59,12 @@ export function Hero() {
           envías la solicitud por WhatsApp para confirmarla.
         </p>
 
-        <Link className="boton" to="/catalogo">
-          Ver el catálogo
-        </Link>
+        <div className="portada__botones">
+          <Link className="boton" to="/catalogo">
+            Ver el catálogo
+          </Link>
+          <WhatsAppButton />
+        </div>
 
         <div
           className={`portada__escena${brand.heroImageSrc ? ' portada__escena--foto' : ''}`}

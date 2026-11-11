@@ -129,7 +129,8 @@ export function FaqPage() {
         <p>
           No. {brand.name} es una marca conceptual creada como demostración. Las imágenes son
           ilustrativas, generadas con inteligencia artificial, y los productos, precios, zonas y
-          reglas son de ejemplo. No se reciben pedidos.
+          reglas son de ejemplo. No hay una repostería detrás: los mensajes de WhatsApp llegan a
+          quien creó la demostración.
         </p>
       ),
     });

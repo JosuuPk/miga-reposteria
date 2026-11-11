@@ -14,6 +14,8 @@
 
 - **Publicación (11 nov 2026):** código subido a https://github.com/JosuuPk/miga-reposteria (público). Netlify suspendió la cuenta del usuario al crearla, así que se pasó a GitHub Pages: base `/miga-reposteria/`, `assetUrl` para imágenes, `basename` en el enrutador, copia `404.html` para rutas internas y publicación automática con GitHub Actions.
 
+- **WhatsApp de contacto (11 nov 2026):** botón en la portada, enlace en el pie y burbuja fija abajo a la derecha (`src/components/WhatsAppButton.tsx`), con un saludo corto (`brand.whatsappGreeting`). Usan el número del usuario, definido en `.github/workflows/pages.yml`; sin número no se muestran. En el configurador en móvil la burbuja se oculta para no tapar controles. Con número, la revisión del pedido también muestra "Abrir WhatsApp con la solicitud".
+
 ## Comprobado
 - Versión de Pages probada en local (`npm run preview:pages`): inicio, catálogo, ficha, configurador y preguntas cargan bajo `/miga-reposteria/`, con imágenes y sin errores de consola.
 Detalle completo en `docs/PRUEBAS.md`. En resumen:
@@ -27,7 +29,7 @@ Detalle completo en `docs/PRUEBAS.md`. En resumen:
 
 ## Pendiente (decisiones del usuario)
 - Activar GitHub Pages en el repositorio (Settings > Pages > Source: GitHub Actions) y comprobar el sitio publicado.
-- Probar el enlace de WhatsApp con un número real.
+- Probar en un teléfono que el botón, la burbuja y la solicitud abren WhatsApp con el mensaje escrito.
 - Revisar los textos de demostración (descripciones, preguntas frecuentes, caso de estudio).
 - Para un negocio real: completar `docs/DATOS_NEGOCIO_REAL.md`.
 
