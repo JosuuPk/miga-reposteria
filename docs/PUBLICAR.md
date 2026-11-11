@@ -2,63 +2,77 @@
 
 La web es un sitio estático: al ejecutar `npm run build` se genera la carpeta `dist`, y eso es todo lo que hay que alojar. No necesita servidor propio ni base de datos.
 
-**Nada de esto se ha hecho todavía.** No se creó ninguna cuenta ni se publicó nada. Estos son los pasos para cuando decidas hacerlo.
+El código está en GitHub y la publicación es automática. Solo falta activarla una vez (ver "Activarlo").
 
 ## Qué está preparado
 
-- `public/_redirects` y `vercel.json`: hacen que direcciones como `/producto/quesillo` funcionen al abrirlas directamente o al recargar. El primero sirve en Netlify y Cloudflare Pages; el segundo en Vercel.
+- Publicación automática en GitHub Pages (`.github/workflows/pages.yml`).
+- `public/_redirects` y `vercel.json`, por si más adelante se cambia a Netlify, Cloudflare Pages o Vercel.
 - Imagen de vista previa (`public/images/compartir.jpg`, 1200×630). Se activa al definir `VITE_SITE_URL`.
 - Variables de configuración documentadas en `.env.example`.
 
-## Dónde alojarla
+## Dónde está alojada: GitHub Pages
 
-Estos servicios alojan sitios estáticos y, según la información con la que se escribió esta guía, ofrecen un plan gratuito suficiente para una demostración de portafolio. **Los planes y límites cambian: confirma el precio en la página oficial antes de elegir.**
+Se eligió GitHub Pages porque es gratuito para repositorios públicos, no usa créditos y no requiere otra cuenta. (Netlify se descartó: suspendió la cuenta al crearla, el 11 nov 2026.)
 
-| Servicio | Regla de rutas incluida | Página de precios |
-| --- | --- | --- |
-| Netlify | Sí (`_redirects`) | https://www.netlify.com/pricing/ |
-| Cloudflare Pages | Sí (`_redirects`) | https://pages.cloudflare.com/ |
-| Vercel | Sí (`vercel.json`) | https://vercel.com/pricing |
-| GitHub Pages | No: requiere un ajuste adicional para las rutas | https://docs.github.com/pages |
+- Repositorio: https://github.com/JosuuPk/miga-reposteria
+- Dirección del sitio: https://josuupk.github.io/miga-reposteria/
 
-### Netlify, plan gratuito (elegido; consultado el 11 nov 2026)
+### Cómo funciona
 
-Según su página de precios, el plan Free cuesta $0 y funciona con **300 créditos al mes**:
+El archivo `.github/workflows/pages.yml` hace todo cada vez que se suben cambios a la rama `main`: instala, ejecuta las pruebas, genera el sitio y lo publica. Si una prueba falla, no se publica. El avance se ve en la pestaña **Actions** del repositorio.
 
-- Cada publicación (cada vez que se sube un cambio a la rama `main`) gasta 15 créditos: unas 20 publicaciones al mes si no hubiera visitas.
-- El tráfico también gasta: 20 créditos por GB transferido y 2 por cada 10.000 peticiones.
-- No pide tarjeta para empezar. Antes de publicar, revisa en su página qué ocurre al agotar los créditos del mes.
+Dos ajustes propios de GitHub Pages, ya incluidos:
 
-Consejo: agrupa los cambios y súbelos juntos en lugar de publicar muchas veces al día.
+- **Subcarpeta.** El sitio vive en `/miga-reposteria/`, no en la raíz. Por eso se genera con `npm run build:pages`, y las imágenes y los enlaces usan esa base (`src/lib/assetUrl.ts`).
+- **Rutas internas.** GitHub Pages no tiene reglas de redirección, así que se publica una copia de la página principal como `404.html`. Con eso, abrir `/producto/quesillo` directamente carga la web. Efecto secundario: esas direcciones responden con código 404 aunque se vean bien, lo que puede afectar a buscadores y a la vista previa al compartir enlaces internos. La portada no tiene ese problema.
 
-Para un negocio real, revisa además las condiciones de uso comercial del plan gratuito de cada servicio.
+### Activarlo (una sola vez)
+
+1. En el repositorio, entra en **Settings** y luego en **Pages**.
+2. En **Build and deployment**, en **Source**, elige **GitHub Actions**.
+3. Ve a la pestaña **Actions**, abre la última ejecución de "Publicar en GitHub Pages" y pulsa **Re-run all jobs** (o sube cualquier cambio).
+
+### Si cambias el nombre del repositorio
+
+Hay que cambiar `miga-reposteria` en tres sitios: los scripts `build:pages` y `preview:pages` de `package.json`, y `VITE_SITE_URL` en `.github/workflows/pages.yml`.
+
+### Probar esa versión en tu equipo
+
+```bash
+npm run build:pages
+```
+
+```bash
+npm run preview:pages
+```
+
+Y abre `http://localhost:4173/miga-reposteria/`.
+
+## Otras opciones de alojamiento
+
+El proyecto también está preparado para servicios que publican en la raíz de un dominio y sí admiten reglas de rutas (`public/_redirects` y `vercel.json`). En ellos se usa `npm run build` y la carpeta `dist`. **Los planes cambian: confirma el precio en la página oficial.**
+
+| Servicio | Página de precios |
+| --- | --- |
+| Cloudflare Pages | https://pages.cloudflare.com/ |
+| Vercel (plan gratuito solo para uso personal) | https://vercel.com/pricing |
+| Netlify (plan Free de $0 con 300 créditos al mes, según su página el 11 nov 2026) | https://www.netlify.com/pricing/ |
 
 ## Costos a prever
 
 | Concepto | Costo |
 | --- | --- |
-| Alojamiento con plan gratuito | $0, mientras el tráfico sea bajo. Por confirmar en cada servicio. |
-| Dirección gratuita del servicio (`algo.netlify.app`, `algo.pages.dev`, `algo.vercel.app`) | $0 |
+| GitHub Pages con repositorio público | $0 |
+| Dirección `josuupk.github.io/miga-reposteria` | $0 |
 | Dominio propio (`.com` u otro) | Pago anual al registrador; depende de la extensión. Opcional para un portafolio. |
 | WhatsApp | La web solo abre un enlace público `wa.me`; no usa la API de pago de WhatsApp Business. |
 
 No hay otros servicios de pago, claves ni integraciones.
 
-## Pasos
-
-1. **Sube el código a GitHub.** Crea un repositorio vacío en tu cuenta y sigue las instrucciones que muestra para subir un repositorio existente. El proyecto ya tiene su historial en Git.
-2. **Crea una cuenta** en el servicio que elijas e importa el repositorio.
-3. **Indica cómo se genera el sitio:**
-   - Comando de build: `npm run build`
-   - Carpeta de salida: `dist`
-4. **Define las variables** en el panel del servicio (Environment variables):
-   - `VITE_SITE_URL`: la dirección que te asigne el servicio, sin barra final.
-   - `VITE_WHATSAPP_NUMBER`: déjala vacía para mantener el modo demostración.
-5. **Publica** y abre la dirección.
-
 ## Comprobar después de publicar
 
-- [ ] Abrir directamente `/catalogo`, `/producto/quesillo` y `/armar/torta-a-medida`, y recargar: deben cargar, no dar error 404.
+- [ ] Abrir directamente `/miga-reposteria/catalogo`, `/miga-reposteria/producto/quesillo` y `/miga-reposteria/armar/torta-a-medida`, y recargar: deben mostrar la web.
 - [ ] Completar una torta hasta la revisión en un teléfono real.
 - [ ] Pegar el enlace del sitio en un chat de WhatsApp y ver que aparece la imagen de vista previa. WhatsApp guarda la vista previa; si no aparece a la primera, prueba con otro chat o más tarde.
 - [ ] Confirmar que el aviso de demostración sigue visible.

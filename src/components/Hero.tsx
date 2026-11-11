@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router';
 import { brand } from '../data/brand';
+import { assetUrl } from '../lib/assetUrl';
 import './Hero.css';
 
 const titular = ['Tu', 'torta,', 'capa', 'por', 'capa.'];
@@ -66,10 +67,10 @@ export function Hero() {
         >
           {brand.heroImageSrc ? (
             <>
-              <img className="portada__foto-halo" src={brand.heroImageSrc} alt="" aria-hidden="true" />
+              <img className="portada__foto-halo" src={assetUrl(brand.heroImageSrc)} alt="" aria-hidden="true" />
               <img
                 className="portada__foto"
-                src={brand.heroImageSrc}
+                src={assetUrl(brand.heroImageSrc)}
                 alt="Torta de capas de vainilla y frambuesa con merengue (imagen ilustrativa)"
                 width={1254}
                 height={1254}

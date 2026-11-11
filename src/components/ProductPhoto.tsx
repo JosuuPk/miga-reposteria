@@ -1,5 +1,6 @@
 import { brand } from '../data/brand';
 import type { ProductImage } from '../data/catalog';
+import { assetUrl } from '../lib/assetUrl';
 import './ProductPhoto.css';
 
 type Props = {
@@ -20,7 +21,7 @@ export function ProductPhoto({ image, ratio, eager = false }: Props) {
       {image.src ? (
         <>
           <img
-            src={image.src}
+            src={assetUrl(image.src)}
             alt={image.alt}
             width={image.width}
             height={image.height}

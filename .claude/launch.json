@@ -4,8 +4,20 @@
     {
       "name": "miga-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 5173
+    },
+    {
+      "name": "miga-pages",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "preview:pages"
+      ],
+      "port": 4173
     }
   ]
 }

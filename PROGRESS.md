@@ -12,7 +12,10 @@
   - Documentación: `README.md`, `docs/PUBLICAR.md`, `docs/DATOS_NEGOCIO_REAL.md`, `docs/PRUEBAS.md`, `docs/CASO_DE_ESTUDIO.md`.
   - Ocho capturas para el portafolio en `docs/capturas/`.
 
+- **Publicación (11 nov 2026):** código subido a https://github.com/JosuuPk/miga-reposteria (público). Netlify suspendió la cuenta del usuario al crearla, así que se pasó a GitHub Pages: base `/miga-reposteria/`, `assetUrl` para imágenes, `basename` en el enrutador, copia `404.html` para rutas internas y publicación automática con GitHub Actions.
+
 ## Comprobado
+- Versión de Pages probada en local (`npm run preview:pages`): inicio, catálogo, ficha, configurador y preguntas cargan bajo `/miga-reposteria/`, con imágenes y sin errores de consola.
 Detalle completo en `docs/PRUEBAS.md`. En resumen:
 - `npm run build` compila sin errores; `npm test` pasa 55 pruebas.
 - Recorrido principal en Chromium, en escritorio y móvil, sin errores de consola.
@@ -23,7 +26,7 @@ Detalle completo en `docs/PRUEBAS.md`. En resumen:
 - **No probado:** abrir WhatsApp con un número real, Safari y Firefox, teléfonos reales, lectores de pantalla, vista previa al compartir (requiere publicar).
 
 ## Pendiente (decisiones del usuario)
-- Publicar: elegir alojamiento, subir el repositorio a GitHub y seguir `docs/PUBLICAR.md`. No se creó ninguna cuenta ni se publicó nada.
+- Activar GitHub Pages en el repositorio (Settings > Pages > Source: GitHub Actions) y comprobar el sitio publicado.
 - Probar el enlace de WhatsApp con un número real.
 - Revisar los textos de demostración (descripciones, preguntas frecuentes, caso de estudio).
 - Para un negocio real: completar `docs/DATOS_NEGOCIO_REAL.md`.
@@ -34,4 +37,4 @@ Ver "Limitaciones conocidas" en `docs/PRUEBAS.md`. Además:
 - La portada a 1440×900 deja la torta parcialmente bajo el pliegue.
 
 ## Próxima acción
-Esperar a que el usuario decida si publica y dónde.
+Cuando el usuario active Pages, revisar el sitio publicado en https://josuupk.github.io/miga-reposteria/.

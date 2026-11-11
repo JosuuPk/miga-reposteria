@@ -4,6 +4,7 @@ import { ProductPhoto } from '../components/ProductPhoto';
 import { SimpleRequestForm } from '../components/request/SimpleRequestForm';
 import { coverings, extras, fillings, flavors, sizes, type CakeOption } from '../data/cakeOptions';
 import { familyLabels, findProduct, products, type Product } from '../data/catalog';
+import { assetUrl } from '../lib/assetUrl';
 import { formatSurcharge } from '../lib/money';
 import { usePageTitle } from '../lib/usePageTitle';
 import { NotFoundPage } from './NotFoundPage';
@@ -76,7 +77,7 @@ function ProductView({ product }: { product: Product }) {
         <div className="ficha__rejilla">
           <div className="ficha__foto">
             {product.image.src && (
-              <img className="ficha__halo" src={product.image.src} alt="" aria-hidden="true" />
+              <img className="ficha__halo" src={assetUrl(product.image.src)} alt="" aria-hidden="true" />
             )}
             <ProductPhoto image={product.image} ratio={photoRatio(product)} eager />
           </div>

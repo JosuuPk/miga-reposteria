@@ -2,6 +2,8 @@
 
 Demostración de una web para una repostería por encargo. El visitante explora el catálogo, arma una torta paso a paso, ve un precio estimado desglosado, elige fecha y entrega, y obtiene una solicitud lista para enviar por WhatsApp.
 
+Demostración en línea: https://josuupk.github.io/miga-reposteria/
+
 **Miga es una marca conceptual.** Los productos, precios, zonas y reglas son de ejemplo, y las imágenes son ilustrativas (generadas con IA). No es un negocio real ni recibe pedidos.
 
 ## Qué necesitas
@@ -29,6 +31,7 @@ Abre `http://localhost:5173` en el navegador. Los cambios en los archivos se ven
 | `npm test` | Ejecutar las pruebas automáticas (precios, compatibilidades, fechas, mensaje). |
 | `npm run build` | Generar la versión para publicar, en la carpeta `dist`. |
 | `npm run preview` | Ver en tu equipo esa versión ya generada. |
+| `npm run build:pages` | Generar la versión para GitHub Pages (subcarpeta `/miga-reposteria/`). |
 
 ## Configuración
 
