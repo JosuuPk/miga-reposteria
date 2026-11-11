@@ -8,7 +8,7 @@ export type Brand = {
   /** true mientras la marca, los precios y las imágenes sean de demostración. */
   isDemo: boolean;
   /**
-   * Número de WhatsApp en formato internacional, solo dígitos (ej.: "584121234567").
+   * Número de WhatsApp en formato internacional, solo dígitos (código de país + número).
    * Con null la web queda en modo demostración: permite previsualizar y copiar
    * la solicitud, pero no abre WhatsApp.
    */
@@ -28,7 +28,8 @@ export const brand: Brand = {
   city: 'Caracas',
   country: 'Venezuela',
   isDemo: true,
-  whatsappNumber: null,
+  // Se lee de la variable VITE_WHATSAPP_NUMBER (ver .env.example). Vacía = demostración.
+  whatsappNumber: import.meta.env.VITE_WHATSAPP_NUMBER?.trim() || null,
   heroImageSrc: '/images/portada.webp',
   timeZone: 'America/Caracas',
   currency: 'USD',

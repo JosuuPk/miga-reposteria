@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { CatalogPage } from './pages/CatalogPage';
 import { ConfiguratorPage } from './pages/ConfiguratorPage';
+import { FaqPage } from './pages/FaqPage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { ProductPage } from './pages/ProductPage';
@@ -39,6 +40,7 @@ function Layout() {
           <Route path="/catalogo" element={<CatalogPage />} />
           <Route path="/producto/:id" element={<ProductPage />} />
           <Route path="/armar/:id" element={<ConfiguratorPage />} />
+          <Route path="/preguntas" element={<FaqPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

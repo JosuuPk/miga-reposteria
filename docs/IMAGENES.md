@@ -72,5 +72,6 @@ Genera una imagen horizontal (1536×1024). Fotografía de producto de reposterí
 | Archivo | Origen | Fecha | Notas |
 | --- | --- | --- | --- |
 | `portada.webp`, `compartir.webp` y los 8 archivos de `productos/` | Generadas por el usuario con ChatGPT a partir de los prompts de este documento | 10 nov 2026 | Imágenes ilustrativas generadas con IA; no son fotos de productos reales. Se guardaron en WebP tal como llegaron por el chat (1254×1254, 1024×1536 o 1536×1024; entre 59 y 175 KB). |
+| `compartir.jpg` | Derivada de `compartir.webp`: recorte a 1200×630 y conversión a JPG | 11 nov 2026 | Para la vista previa al compartir el enlace. |
 
 Para sustituir una imagen, guarda la nueva con el mismo nombre en la misma carpeta. Si cambia el nombre o el tamaño, actualiza `image.src`, `width` y `height` en `src/data/catalog.ts` (o `heroImageSrc` en `src/data/brand.ts` para la portada).

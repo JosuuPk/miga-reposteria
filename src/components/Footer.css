@@ -8,7 +8,7 @@
 
 .pie__fila {
   display: grid;
-  gap: var(--e-3);
+  gap: var(--e-6);
 }
 
 .pie__fila p {
@@ -16,10 +16,30 @@
 }
 
 .pie__marca {
+  margin-bottom: var(--e-3);
   font-family: var(--fuente-titulos);
   font-size: 2.25rem;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--texto);
+}
+
+.pie a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--texto);
+  text-underline-offset: 0.3em;
+}
+
+.pie a:hover {
+  color: var(--frambuesa-viva);
+}
+
+@media (min-width: 48rem) {
+  .pie__fila {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
 }

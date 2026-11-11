@@ -1,0 +1,89 @@
+.faq__lista {
+  max-width: 48rem;
+  border-top: 1px solid var(--borde);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--borde);
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+  min-height: 4rem;
+  padding-block: var(--e-3);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary h2 {
+  font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+
+/* Signo más que gira a una equis al abrir. */
+.faq summary::after {
+  content: '';
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  background:
+    linear-gradient(var(--frambuesa-viva), var(--frambuesa-viva)) center / 100% 2px no-repeat,
+    linear-gradient(var(--frambuesa-viva), var(--frambuesa-viva)) center / 2px 100% no-repeat;
+  transition: rotate 300ms var(--curva);
+}
+
+.faq details[open] summary::after {
+  rotate: 45deg;
+}
+
+.faq summary:hover h2 {
+  color: var(--frambuesa-viva);
+}
+
+.faq__respuesta {
+  display: grid;
+  gap: var(--e-3);
+  max-width: 40rem;
+  padding-bottom: var(--e-5);
+  color: var(--texto-suave);
+  font-size: var(--t-s);
+}
+
+.faq__respuesta ul,
+.condiciones ul {
+  display: grid;
+  gap: var(--e-2);
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+
+.condiciones {
+  display: grid;
+  gap: var(--e-4);
+  justify-items: start;
+  max-width: 48rem;
+  margin-top: var(--e-8);
+  padding: var(--e-5);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  background: var(--superficie);
+}
+
+.condiciones h2 {
+  font-size: var(--t-l);
+}
+
+.condiciones ul {
+  color: var(--texto-suave);
+  font-size: var(--t-s);
+}
